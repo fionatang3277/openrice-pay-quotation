@@ -98,9 +98,9 @@ table{width:100%;border-collapse:collapse;margin-top:14px}th{background:var(--in
   function money(v, d){ d = d == null ? 2 : d; return Number(v||0).toLocaleString("en-HK",{minimumFractionDigits:d,maximumFractionDigits:d}); }
   function plans(){
     return [
-      {name: zh ? "SME plan" : "SME Plan", on: document.getElementById("selSME").checked, or: num("orSME"), loc: num("locSME")},
-      {name: zh ? "Dine-in plan" : "Dine-in Plan", on: document.getElementById("selDine").checked, or: num("orDine"), loc: num("locDine")},
-      {name: zh ? "Fast Food plan" : "Fast Food Plan", on: document.getElementById("selFast").checked, or: num("orFast"), loc: num("locFast")}
+      {name: zh ? "\u4e2d\u5c0f\u4f01\u65b9\u6848" : "SME Plan", on: document.getElementById("selSME").checked, or: num("orSME"), loc: num("locSME")},
+      {name: zh ? "\u5802\u98df\u65b9\u6848" : "Dine-in Plan", on: document.getElementById("selDine").checked, or: num("orDine"), loc: num("locDine")},
+      {name: zh ? "\u5feb\u9910\u65b9\u6848" : "Fast Food Plan", on: document.getElementById("selFast").checked, or: num("orFast"), loc: num("locFast")}
     ];
   }
   function calc(){
@@ -122,18 +122,18 @@ table{width:100%;border-collapse:collapse;margin-top:14px}th{background:var(--in
   }
   function t(a,b){ return zh ? a : b; }
   function render(){
-    document.getElementById("langBtn").textContent = zh ? "ENG" : "ZH";
-    document.getElementById("title").textContent = t("OpenRice Pay quotation","Payment Solution Quotation");
-    document.getElementById("heroTitle").textContent = t("Rate comparison","Payment rate comparison");
-    document.getElementById("heroDesc").textContent = t("Compare OpenRice rate vs current provider blended rate.","Compare OpenRice proposed rate with current provider blended rate.");
-    document.getElementById("inTitle").textContent = t("Merchant and rates","Merchant details and rates");
-    document.getElementById("outTitle").textContent = (val("merchant") || t("Customer","Merchant")) + t(" cost saving"," cost saving");
-    document.getElementById("pdfBtn").textContent = t("Export PDF","Export PDF");
-    document.getElementById("formula").textContent = t("Blended = local rate x local mix + overseas rate x overseas mix","Blended = local rate x local mix + overseas rate x overseas mix");
-    document.getElementById("note").textContent = t("Estimate only. Final rates follow the signed agreement.","Estimate only. Final rates follow the signed agreement.");
-    document.getElementById("saveLabel").textContent = t("Annual saving","Estimated annual saving");
+    document.getElementById("langBtn").textContent = zh ? "ENG" : "\u4e2d\u6587";
+    document.getElementById("title").textContent = t("\u5c08\u696d\u652f\u4ed8\u65b9\u6848\u5831\u50f9","Payment Solution Quotation");
+    document.getElementById("heroTitle").textContent = t("\u65b9\u6848\u8cbb\u7387\u6bd4\u8f03","Payment rate comparison");
+    document.getElementById("heroDesc").textContent = t("\u6839\u64da\u6bcf\u65e5\u4fe1\u7528\u5361\u71df\u696d\u984d\u53ca\u5361\u7a2e\u6bd4\u4f8b\uff0c\u6bd4\u8f03 OpenRice \u5efa\u8b70\u8cbb\u7387\u8207\u73fe\u6709\u4f9b\u61c9\u5546\u5be6\u969b\u8cbb\u7387\u3002","Compare OpenRice proposed rate with current provider blended rate.");
+    document.getElementById("inTitle").textContent = t("\u5546\u5bb6\u8cc7\u6599\u53ca\u8cbb\u7387\u8a2d\u5b9a","Merchant details and rates");
+    document.getElementById("outTitle").textContent = (val("merchant") || t("\u5ba2\u6236","Merchant")) + (zh ? " \u6210\u672c\u7bc0\u7701\u5206\u6790" : " cost saving");
+    document.getElementById("pdfBtn").textContent = t("\u532f\u51fa PDF","Export PDF");
+    document.getElementById("formula").textContent = t("\u5be6\u969b\u8cbb\u7387 = \u672c\u5730\u5361\u8cbb\u7387 x \u672c\u5730\u6bd4\u4f8b + \u6d77\u5916\u5361\u8cbb\u7387 x \u6d77\u5916\u6bd4\u4f8b","Blended = local rate x local mix + overseas rate x overseas mix");
+    document.getElementById("note").textContent = t("\u5099\u8a3b\uff1a\u4ee5\u4e0a\u70ba\u4f30\u7b97\uff0c\u6700\u7d42\u8cbb\u7387\u53ca\u689d\u6b3e\u4ee5\u6b63\u5f0f\u5408\u7d04\u70ba\u6e96\u3002","Estimate only. Final rates follow the signed agreement.");
+    document.getElementById("saveLabel").textContent = t("\u9810\u8a08\u5e74\u5ea6\u7bc0\u7701","Estimated annual saving");
     var date = new Intl.DateTimeFormat("en-GB", {year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
-    document.getElementById("metaDate").textContent = "DATE " + date;
+    document.getElementById("metaDate").textContent = (zh ? "\u65e5\u671f " : "DATE ") + date;
     document.getElementById("metaSales").textContent = "Sales " + (val("salesName") || "-");
     var rows = calc();
     var best = 0;
@@ -144,9 +144,9 @@ table{width:100%;border-collapse:collapse;margin-top:14px}th{background:var(--in
       document.getElementById("path").textContent = rows[0].or.toFixed(2) + "% -> " + rows[0].blended.toFixed(2) + "% -> $" + money(best,0);
       document.getElementById("summary").innerHTML = "<div style='display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #d9dee8'>" +
         "<div style='padding:12px'><div style='font-size:11px;color:#647083'>OpenRice</div><b>" + rows[0].or.toFixed(2) + "%</b></div>" +
-        "<div style='padding:12px'><div style='font-size:11px;color:#647083'>Current</div><b>" + rows[0].blended.toFixed(2) + "%</b></div>" +
-        "<div style='padding:12px'><div style='font-size:11px;color:#647083'>Gap</div><b>" + Math.abs(rows[0].gap).toFixed(2) + " pts</b></div>" +
-        "<div style='padding:12px;background:#e5f2eb'><div style='font-size:11px;color:#2c7a55'>Saving</div><b class='save'>$" + money(rows[0].save,0) + "</b></div></div>";
+        "<div style='padding:12px'><div style='font-size:11px;color:#647083'>" + (zh?"\u73fe\u6709\u5be6\u969b\u8cbb\u7387":"Current") + "</div><b>" + rows[0].blended.toFixed(2) + "%</b></div>" +
+        "<div style='padding:12px'><div style='font-size:11px;color:#647083'>" + (zh?"\u8cbb\u7387\u5dee":"Gap") + "</div><b>" + Math.abs(rows[0].gap).toFixed(2) + " pts</b></div>" +
+        "<div style='padding:12px;background:#e5f2eb'><div style='font-size:11px;color:#2c7a55'>" + (zh?"\u5e74\u5ea6\u7bc0\u7701":"Saving") + "</div><b class='save'>$" + money(rows[0].save,0) + "</b></div></div>";
     } else {
       document.getElementById("path").textContent = "";
       document.getElementById("summary").innerHTML = "";
@@ -154,14 +154,14 @@ table{width:100%;border-collapse:collapse;margin-top:14px}th{background:var(--in
     var html = "";
     rows.forEach(function(r, i){
       html += "<div class='card'><h3>0" + (i+1) + " " + r.name + " | GMV $" + money(num("gmv"),0) + "</h3>" +
-        "<table><thead><tr><th></th><th>OpenRice</th><th>Current</th></tr></thead><tbody>" +
-        "<tr><td>Rate</td><td class='or'>" + r.or.toFixed(2) + "%</td><td>" + r.blended.toFixed(2) + "%<br><small>Local " + r.loc.toFixed(2) + "% x " + r.local.toFixed(2) + "% / OS " + r.ov.toFixed(2) + "% x " + r.over.toFixed(2) + "%</small></td></tr>" +
-        "<tr><td>Daily</td><td class='or'>$" + money(r.daily) + "</td><td>$" + money(r.cDaily) + "</td></tr>" +
-        "<tr><td>Annual</td><td class='or'>$" + money(r.annual) + "</td><td>$" + money(r.cAnnual) + "</td></tr>" +
-        "<tr><td>Saving</td><td class='or'><span class='save'>$" + money(r.save) + "</span></td><td></td></tr>" +
+        "<table><thead><tr><th></th><th>OpenRice</th><th>" + (zh?"\u73fe\u6709\u4f9b\u61c9\u5546":"Current") + "</th></tr></thead><tbody>" +
+        "<tr><td>" + (zh?"\u6709\u6548\u8cbb\u7387":"Rate") + "</td><td class='or'>" + r.or.toFixed(2) + "%</td><td>" + r.blended.toFixed(2) + "%<br><small>" + (zh?"\u672c\u5730":"Local") + " " + r.loc.toFixed(2) + "% x " + r.local.toFixed(2) + "% / " + (zh?"\u6d77\u5916":"OS") + " " + r.ov.toFixed(2) + "% x " + r.over.toFixed(2) + "%</small></td></tr>" +
+        "<tr><td>" + (zh?"\u6bcf\u65e5\u624b\u7e8c\u8cbb":"Daily") + "</td><td class='or'>$" + money(r.daily) + "</td><td>$" + money(r.cDaily) + "</td></tr>" +
+        "<tr><td>" + (zh?"\u5e74\u5ea6\u624b\u7e8c\u8cbb":"Annual") + "</td><td class='or'>$" + money(r.annual) + "</td><td>$" + money(r.cAnnual) + "</td></tr>" +
+        "<tr><td>" + (zh?"\u5e74\u5ea6\u7bc0\u7701":"Saving") + "</td><td class='or'><span class='save'>$" + money(r.save) + "</span></td><td></td></tr>" +
         "</tbody></table></div>";
     });
-    document.getElementById("cards").innerHTML = html || "<p>Select at least one plan</p>";
+    document.getElementById("cards").innerHTML = html || ("<p>" + (zh?"\u8acb\u81f3\u5c11\u9078\u64c7\u4e00\u500b\u65b9\u6848":"Select at least one plan") + "</p>");
   }
   document.getElementById("langBtn").onclick = function(){ zh = !zh; render(); };
   ["gmv","localRatio","overseaRate","orSME","locSME","orDine","locDine","orFast","locFast"].forEach(function(id){ document.getElementById(id).oninput = render; });
