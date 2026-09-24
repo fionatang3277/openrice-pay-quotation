@@ -3,137 +3,177 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>OpenRice Pay · Quotation</title>
+<title>OpenRice Pay Quotation</title>
 <link rel="icon" type="image/png" href="./openrice-pay-logo.png"/>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
-:root{--ink:#202a63;--ink-strong:#141a43;--accent:#c64b3c;--accent-soft:#f8e8e4;--success:#2c7a55;--success-soft:#e5f2eb;--paper:#fff;--canvas:#edf0f5;--soft:#f5f6f9;--line:#d9dee8;--muted:#647083}
-*{box-sizing:border-box}html{background:#eef0f4}body{margin:0;font-family:IBM Plex Sans,sans-serif;color:#1f2933}
+:root{--ink:#202a63;--accent:#c64b3c;--success:#2c7a55;--soft:#f5f6f9;--line:#d9dee8;--muted:#647083}
+*{box-sizing:border-box}html,body{margin:0;background:#eef0f4;font-family:IBM Plex Sans,sans-serif;color:#1f2933}
 button,input{font:inherit}button{cursor:pointer}
-.app-shell{min-height:100vh;padding:24px;background:var(--canvas)}.page-wrap{max-width:1220px;margin:0 auto}
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.brand-lockup{display:flex;align-items:center;gap:12px}.brand-mark{width:116px;height:52px;object-fit:contain}
-.eyebrow,.micro-label{margin:0 0 7px;font-size:10px;letter-spacing:.17em;font-weight:700;color:var(--accent)}
-.language-toggle{min-width:72px;padding:9px 16px;border:1px solid var(--ink);background:#fff;font-size:12px;font-weight:700}
-.quotation-sheet{position:relative;border:1px solid var(--line);border-radius:8px;background:#fff;box-shadow:0 20px 50px rgba(25,37,77,.13);overflow:hidden}
-.quotation-sheet:before{content:"";position:absolute;left:0;top:0;width:9px;height:100%;background:var(--ink)}
-.proposal-header{display:flex;justify-content:space-between;gap:24px;padding:40px 48px 28px;border-bottom:1px solid var(--line)}
-.proposal-brand{display:flex;gap:16px}.brand-symbol{width:132px;height:60px;display:grid;place-items:center;border:1px solid var(--line);border-radius:8px}
-.brand-symbol img{width:122px;height:52px;object-fit:contain}
-.proposal-brand h1{margin:0;color:var(--ink-strong);font-size:clamp(24px,3vw,36px)}
-.subhead{margin:8px 0 0;color:var(--muted);font-size:12px}
-.quote-meta{min-width:200px;text-align:right;color:var(--muted);font-size:11px}
-.quote-word{color:var(--accent);font-size:24px;font-weight:700}
-.hero-grid{display:grid;grid-template-columns:1fr 260px;gap:32px;padding:28px 48px;background:var(--soft)}
-.hero-copy h2{margin:0;font-size:clamp(24px,3vw,40px)}
-.hero-description{color:var(--muted);font-size:14px;line-height:1.7}
-.proof-path{display:flex;gap:12px;align-items:center;margin-top:16px;font-size:20px}
-.proof-path small{display:block;color:var(--muted);font-size:9px}
-.positive{color:var(--success)}.negative{color:var(--accent)}
-.saving-callout{padding:20px;color:#fff;background:var(--success)}.saving-callout.negative{background:var(--accent)}
-.saving-callout strong{display:block;font-size:36px;margin:6px 0}
-.input-section,.results-section{padding:28px 48px}.input-section{border-top:1px solid var(--line);background:#f7f8fb}
-.section-heading{display:flex;justify-content:space-between;gap:16px;margin-bottom:16px}
-.input-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.input-grid-2{grid-template-columns:1fr 1fr;margin-top:12px}
-.field{display:flex;flex-direction:column;gap:6px}.field span{color:var(--muted);font-size:11px}
-.field input,.rate-table input{width:100%;border:1px solid var(--line);padding:10px}
-.rate-table-wrap{margin-top:20px;border:1px solid var(--line)}.rate-table{width:100%;border-collapse:collapse}
-.rate-table th{background:var(--ink);color:#fff;padding:10px;text-align:left;font-size:11px}
-.rate-table td{padding:8px 10px;border-bottom:1px solid var(--line)}
-.export-button{border:0;padding:12px 16px;background:var(--accent);color:#fff;font-weight:700}
-.summary-metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line)}
-.summary-metric{padding:14px;border-right:1px solid var(--line)}.summary-saving{background:var(--success-soft)}
-.insight-strip{margin:16px 0;padding:12px;background:var(--accent-soft);border-left:3px solid var(--accent);font-size:12px}
-.comparison-table{width:100%;min-width:640px;border-collapse:collapse}
-.comparison-table th,.comparison-table td{padding:12px;border:1px solid var(--line);text-align:left}
-.comparison-table thead th{background:var(--ink);color:#fff}.preferred-head{background:var(--accent)!important}
-.preferred-cell{background:#fdf6f4}.saving-number{color:var(--success);font-size:24px}
-.result-card{border:1px solid var(--line);margin-bottom:14px}.result-card-head{padding:12px;background:#f7f8fb;display:flex;justify-content:space-between}
-.proposal-footer{display:flex;justify-content:space-between;padding:16px 48px;color:var(--muted);font-size:10px;border-top:1px solid var(--line)}
-@media(max-width:800px){.hero-grid,.input-grid,.summary-metrics{grid-template-columns:1fr}.proposal-header{flex-direction:column}}
-@media print{.no-print,.input-section{display:none!important}}
+.wrap{max-width:1100px;margin:0 auto;padding:20px}
+.bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.logo{height:44px}.lang{padding:8px 14px;border:1px solid var(--ink);background:#fff;font-weight:700}
+.sheet{background:#fff;border:1px solid var(--line);box-shadow:0 16px 40px rgba(25,37,77,.12)}
+.head{display:flex;justify-content:space-between;gap:20px;padding:28px 32px;border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:28px;color:#141a43}.meta{color:var(--muted);font-size:12px;text-align:right}
+.hero{display:grid;grid-template-columns:1fr 240px;gap:20px;padding:24px 32px;background:var(--soft)}
+.box{padding:16px;color:#fff;background:var(--success)}.box.bad{background:var(--accent)}.box b{display:block;font-size:32px;margin:6px 0}
+.pad{padding:24px 32px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.g2{grid-template-columns:1fr 1fr;margin-top:10px}
+label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted)}input{padding:8px;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;margin-top:14px}th{background:var(--ink);color:#fff;text-align:left;padding:8px}td{padding:8px;border-bottom:1px solid var(--line)}
+.btn{border:0;background:var(--accent);color:#fff;padding:10px 14px;font-weight:700}
+.card{border:1px solid var(--line);margin-top:12px}.card h3{margin:0;padding:10px 12px;background:#f7f8fb;font-size:14px}
+.or{background:#fdf6f4}.save{color:var(--success);font-size:22px}.note{padding:16px 32px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
+@media(max-width:800px){.hero,.grid,.g2{grid-template-columns:1fr}.head{flex-direction:column}}
 </style>
 </head>
 <body>
-<div id="app"></div>
+<div class="wrap">
+  <div class="bar">
+    <img class="logo" src="./openrice-pay-logo.png" alt="OpenRice Pay"/>
+    <button class="lang" id="langBtn" type="button">ENG</button>
+  </div>
+  <div class="sheet" id="sheet">
+    <div class="head">
+      <div>
+        <div style="color:#c64b3c;font-size:11px;letter-spacing:.16em;font-weight:700">OPENRICE PAY</div>
+        <h1 id="title">Professional Payment Quotation</h1>
+      </div>
+      <div class="meta">
+        <div style="color:#c64b3c;font-size:22px;font-weight:700">QUOTATION</div>
+        <div id="metaDate"></div>
+        <div id="metaSales"></div>
+      </div>
+    </div>
+    <div class="hero">
+      <div>
+        <h2 id="heroTitle" style="margin:0">Rate comparison</h2>
+        <p id="heroDesc" style="color:#647083"></p>
+        <div id="path" style="font-size:20px"></div>
+      </div>
+      <div class="box" id="saveBox"><span id="saveLabel">Annual saving</span><b id="saveAmt">$0</b><small>HKD / 365 days</small></div>
+    </div>
+    <div class="pad">
+      <h3 id="inTitle">Merchant and rates</h3>
+      <div class="grid">
+        <label>Merchant<input id="merchant"/></label>
+        <label>Daily card GMV<input id="gmv" type="number" value="10000"/></label>
+        <label>Local card %<input id="localRatio" type="number" value="70"/></label>
+        <label>Overseas %<input id="overRatio" value="30.00%" readonly/></label>
+      </div>
+      <div class="grid g2">
+        <label>Sales name<input id="salesName"/></label>
+        <label>Sales contact<input id="salesContact"/></label>
+      </div>
+      <table>
+        <thead><tr><th>Plan</th><th>OpenRice %</th><th>Current local %</th></tr></thead>
+        <tbody>
+          <tr><td><label style="flex-direction:row;color:#1f2933"><input type="checkbox" id="selSME" checked/> SME</label></td><td><input id="orSME" type="number" step="0.01" value="1.6"/></td><td><input id="locSME" type="number" step="0.01" value="1.3"/></td></tr>
+          <tr><td><label style="flex-direction:row;color:#1f2933"><input type="checkbox" id="selDine" checked/> Dine-in</label></td><td><input id="orDine" type="number" step="0.01" value="2.1"/></td><td><input id="locDine" type="number" step="0.01" value="2.2"/></td></tr>
+          <tr><td><label style="flex-direction:row;color:#1f2933"><input type="checkbox" id="selFast" checked/> Fast Food</label></td><td><input id="orFast" type="number" step="0.01" value="1.8"/></td><td><input id="locFast" type="number" step="0.01" value="1.3"/></td></tr>
+        </tbody>
+      </table>
+      <div class="grid g2" style="margin-top:12px">
+        <label>Current overseas %<input id="overseaRate" type="number" step="0.01" value="3"/></label>
+        <p id="formula" style="color:#647083;font-size:12px">Blended = local rate x local mix + overseas rate x overseas mix</p>
+      </div>
+    </div>
+    <div class="pad" style="border-top:1px solid #d9dee8">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <h3 id="outTitle" style="margin:0">Cost saving</h3>
+        <button class="btn" id="pdfBtn" type="button">Export PDF</button>
+      </div>
+      <div id="summary" style="margin:14px 0"></div>
+      <div id="cards"></div>
+    </div>
+    <div class="note" id="note"></div>
+  </div>
+</div>
 <script>
-const LOGO="./openrice-pay-logo.png";
-const CATS=["SME","Dine-in","Fast Food"];
-const labels={zh:{SME:"\u4e2d\u5c0f\u4f01\u65b9\u6848","Dine-in":"\u5802\u98df\u65b9\u6848","Fast Food":"\u5feb\u9910\u65b9\u6848"},en:{SME:"SME Plan","Dine-in":"Dine-in Plan","Fast Food":"Fast Food Plan"}};
-const S={language:new URLSearchParams(location.search).get("lang")==="en"?"en":"zh",merchant:"",salesName:"",salesContact:"",gmv:10000,localRatio:70,overseaRate:3,selected:{SME:true,"Dine-in":true,"Fast Food":true},rates:{SME:{proposed:1.6,local:1.3},"Dine-in":{proposed:2.1,local:2.2},"Fast Food":{proposed:1.8,local:1.3}}};
-const money=(v,d=2)=>Number(v||0).toLocaleString("en-HK",{minimumFractionDigits:d,maximumFractionDigits:d});
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&","<":"<",">":">","\"":""","'":"&#39;"}[c]));
-function compute(){
- const ovR=Math.max(0,Math.min(100,100-Number(S.localRatio||0)));
- return {ovR,results:CATS.filter(c=>S.selected[c]).map(cat=>{
-  const r=S.rates[cat],p=+r.proposed||0,loc=+r.local||0,ov=+S.overseaRate||0;
-  const ls=Math.max(0,Math.min(100,+S.localRatio||0))/100,os=ovR/100;
-  const daily=Number(S.gmv||0)*(p/100);
-  const cDaily=Number(S.gmv||0)*ls*(loc/100)+Number(S.gmv||0)*os*(ov/100);
-  const blended=loc*ls+ov*os;
-  return {category:cat,proposedRate:p,localRate:loc,overseaRate:ov,localRatio:+S.localRatio||0,overseaRatio:ovR,blendedRate:blended,rateGap:blended-p,dailyFee:daily,annualFee:daily*365,competitorDailyFee:cDaily,competitorAnnualFee:cDaily*365,annualSavings:(cDaily-daily)*365};
- })};
-}
-function exportPdf(){const n=document.getElementById("quotation-sheet");if(!n||typeof html2pdf!=="function"){print();return;}html2pdf().set({margin:[.35,.35],filename:(S.language==="zh"?"OpenRice_quote_":"OpenRice_Quotation_")+(S.merchant||"Merchant")+".pdf",html2canvas:{scale:2},jsPDF:{unit:"in",format:"a4",orientation:"portrait"}}).from(n).save();}
-function render(){
- const zh=S.language==="zh";
- const {ovR,results}=compute(); const hero=results[0];
- const heroSaving=results.reduce((b,i)=>i.annualSavings>b?i.annualSavings:b,hero?hero.annualSavings:0);
- const date=new Intl.DateTimeFormat(zh?"zh-HK":"en-GB",{year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
- const L=zh?{
-  q:"\u5c08\u696d\u652f\u4ed8\u65b9\u6848\u5831\u50f9",h:"\u65b9\u6848\u8cbb\u7387\u6bd4\u8f03",d:"\u6839\u64da\u6bcf\u65e5\u4fe1\u7528\u5361\u71df\u696d\u984d\u53ca\u5361\u7a2e\u6bd4\u4f8b\u6bd4\u8f03\u8cbb\u7387\u3002",
-  or:"OpenRice \u8cbb\u7387",cr:"\u73fe\u6709\u5be6\u969b\u8cbb\u7387",sv:"\u5e74\u5ea6\u7bc0\u7701",in:"\u5546\u5bb6\u8cc7\u6599\u53ca\u8cbb\u7387\u8a2d\u5b9a",ex:"\u532f\u51fa PDF \u5831\u50f9\u55ae",lang:"ENG",prov:"\u73fe\u6709\u652f\u4ed8\u4f9b\u61c9\u5546"
- }:{
-  q:"Payment Solution Quotation",h:"Payment rate comparison",d:"Compare OpenRice proposed rate with the current provider blended rate.",
-  or:"OpenRice Rate",cr:"Current Actual Rate",sv:"Annual Saving",in:"Merchant Details & Rate Settings",ex:"Export PDF Quotation",lang:"\u4e2d\u6587",prov:"Current Provider"
- };
- const rows=CATS.map(c=>`<tr><td><label><input type=checkbox data-plan="${c}" ${S.selected[c]?"checked":""}> ${esc(labels[S.language][c])}</label></td><td><input type=number step=0.01 data-rate="${c}|proposed" value="${S.rates[c].proposed}"></td><td><input type=number step=0.01 data-rate="${c}|local" value="${S.rates[c].local}"></td></tr>`).join("");
- const cards=results.map((r,i)=>`<article class=result-card><div class=result-card-head><strong>0${i+1} ${esc(labels[S.language][r.category])}</strong><span>GMV $${money(S.gmv,0)}</span></div>
- <div style="overflow:auto"><table class=comparison-table><thead><tr><th></th><th class=preferred-head>OpenRice</th><th>${esc(L.prov)}</th></tr></thead><tbody>
- <tr><th>${zh?"\u6709\u6548\u8cbb\u7387":"Effective rate"}</th><td class=preferred-cell>${r.proposedRate.toFixed(2)}%</td><td>${r.blendedRate.toFixed(2)}%<br><small>${zh?"\u672c\u5730":"Local"} ${r.localRate.toFixed(2)}% x ${r.localRatio.toFixed(2)}% / ${zh?"\u6d77\u5916":"Overseas"} ${r.overseaRate.toFixed(2)}% x ${r.overseaRatio.toFixed(2)}%</small></td></tr>
- <tr><th>${zh?"\u6bcf\u65e5\u624b\u7e8c\u8cbb":"Daily fee"}</th><td class=preferred-cell>$${money(r.dailyFee)}</td><td>$${money(r.competitorDailyFee)}</td></tr>
- <tr><th>${zh?"\u5e74\u5ea6\u624b\u7e8c\u8cbb":"Annual fee"}</th><td class=preferred-cell>$${money(r.annualFee)}</td><td>$${money(r.competitorAnnualFee)}</td></tr>
- <tr><th>${zh?"\u5e74\u5ea6\u7bc0\u7701":"Annual saving"}</th><td class=preferred-cell><strong class=saving-number>$${money(r.annualSavings)}</strong></td><td></td></tr>
- </tbody></table></div></article>`).join("") || `<p>${zh?"\u8acb\u9078\u64c7\u81f3\u5c11\u4e00\u500b\u65b9\u6848":"Select a plan"}</p>`;
- document.getElementById("app").innerHTML=`<main class=app-shell><div class=page-wrap>
- <header class="topbar no-print"><div class=brand-lockup><img class=brand-mark src="${LOGO}" alt="OpenRice Pay"><div><p class=eyebrow>OPENRICE PAY \u00b7 SALES TOOL</p><strong>Payment Proposal Studio</strong></div></div>
- <button class=language-toggle type=button>${L.lang}</button></header>
- <section id=quotation-sheet class=quotation-sheet>
- <div class=proposal-header><div class=proposal-brand><div class=brand-symbol><img src="${LOGO}" alt=""></div><div><p class=micro-label>OPENRICE PAY</p><h1>${esc(L.q)}</h1><p class=subhead>Professional Payment Solution Quotation</p></div></div>
- <div class=quote-meta><p class=quote-word>QUOTATION</p><p>${zh?"\u65e5\u671f":"DATE"} <span>${esc(date)}</span></p><p>Sales <span>${esc(S.salesName||"\u2014")}</span></p></div></div>
- <div class=hero-grid><div class=hero-copy><p class=eyebrow>${zh?"\u5546\u696d\u652f\u4ed8\u65b9\u6848\u6bd4\u8f03":"COMMERCIAL REVIEW"}</p><h2>${esc(L.h)}</h2><p class=hero-description>${esc(L.d)}</p>
- <div class=proof-path><span><small>${esc(L.or)}</small>${hero?hero.proposedRate.toFixed(2)+"%":"\u2014"}</span><b>\u2192</b><span><small>${esc(L.cr)}</small>${hero?hero.blendedRate.toFixed(2)+"%":"\u2014"}</span><b>\u2192</b><span class="${heroSaving>=0?"positive":"negative"}"><small>${esc(L.sv)}</small>$${money(heroSaving,0)}</span></div></div>
- <div class="saving-callout ${heroSaving>=0?"positive":"negative"}"><span>${esc(L.sv)}</span><strong>$${money(heroSaving,0)}</strong><small>HKD \u00b7 365 ${zh?"\u65e5":"days"}</small></div></div>
- <section class="input-section no-print"><h3>${esc(L.in)}</h3>
- <div class=input-grid>
- <label class=field><span>${zh?"\u5546\u5bb6\u540d\u7a31":"Merchant"}</span><input id=merchant value="${esc(S.merchant)}"></label>
- <label class=field><span>${zh?"\u6bcf\u65e5\u4fe1\u7528\u5361\u71df\u696d\u984d":"Daily card GMV"}</span><input id=gmv type=number value="${S.gmv}"></label>
- <label class=field><span>${zh?"\u672c\u5730\u5361\u6bd4\u4f8b %":"Local card %"}</span><input id=localRatio type=number value="${S.localRatio}"></label>
- <label class=field><span>${zh?"\u6d77\u5916\u5361\u6bd4\u4f8b":"Overseas %"}</span><input value="${ovR.toFixed(2)}%" readonly></label></div>
- <div class="input-grid input-grid-2">
- <label class=field><span>Sales</span><input id=salesName value="${esc(S.salesName)}"></label>
- <label class=field><span>${zh?"\u806f\u7d61":"Contact"}</span><input id=salesContact value="${esc(S.salesContact)}"></label></div>
- <div class=rate-table-wrap><table class=rate-table><thead><tr><th>${zh?"\u65b9\u6848":"Plan"}</th><th>OpenRice %</th><th>${zh?"\u73fe\u6709\u672c\u5730\u5361 %":"Current local %"}</th></tr></thead><tbody>${rows}</tbody></table>
- <div class=input-grid style="margin:12px"><label class=field><span>${zh?"\u73fe\u6709\u6d77\u5916\u5361\u8cbb\u7387 %":"Current overseas %"}</span><input id=overseaRate type=number step=0.01 value="${S.overseaRate}"></label>
- <p style="color:#647083;font-size:12px">${zh?"\u5be6\u969b\u8cbb\u7387 = \u672c\u5730\u5361\u8cbb\u7387 \u00d7 \u672c\u5730\u6bd4\u4f8b + \u6d77\u5916\u5361\u8cbb\u7387 \u00d7 \u6d77\u5916\u6bd4\u4f8b":"Blended = local rate x local mix + overseas rate x overseas mix"}</p></div></div></section>
- <section class=results-section><div class=section-heading><h3>${esc(S.merchant|| (zh?"\u5ba2\u6236":"Merchant"))} ${zh?"\u6210\u672c\u7bc0\u7701\u5206\u6790":"cost saving"}</h3>
- <button class="export-button no-print" id=export-pdf type=button>${esc(L.ex)}</button></div>
- ${hero?`<div class=summary-metrics><div class=summary-metric><span>${L.or}</span><strong>${hero.proposedRate.toFixed(2)}%</strong></div><div class=summary-metric><span>${L.cr}</span><strong>${hero.blendedRate.toFixed(2)}%</strong></div><div class=summary-metric><span>${zh?"\u8cbb\u7387\u5dee":"Gap"}</span><strong>${Math.abs(hero.rateGap).toFixed(2)} pts</strong></div><div class="summary-metric summary-saving"><span>${L.sv}</span><strong>$${money(hero.annualSavings,0)}</strong></div></div>`:""}
- <div class=insight-strip>${zh?"OpenRice \u4ee5\u7d71\u4e00\u8cbb\u7387\u8655\u7406\u672c\u5730\u53ca\u6d77\u5916\u5361\uff1b\u73fe\u6709\u4f9b\u61c9\u5546\u6309\u5361\u7a2e\u6bd4\u4f8b\u8a08\u7b97\u5be6\u969b\u6210\u672c\u3002":"OpenRice uses one rate for local and overseas cards; the current provider blends by mix."}</div>
- ${cards}
- </section>
- <footer class=proposal-footer><p>${zh?"\u5099\u8a3b\uff1a\u4ee5\u4e0a\u70ba\u4f30\u7b97\uff0c\u6700\u7d42\u4ee5\u6b63\u5f0f\u5408\u7d04\u70ba\u6e96\u3002":"Estimate only. Final rates follow the signed agreement."}</p><p>OpenRice Pay</p></footer>
- </section></div></main>`;
- document.querySelector(".language-toggle").onclick=()=>{S.language=S.language==="zh"?"en":"zh";render();};
- ["merchant","salesName","salesContact"].forEach(id=>{const el=document.getElementById(id);if(el)el.oninput=()=>{S[id]=el.value;};});
- ["gmv","localRatio","overseaRate"].forEach(id=>{const el=document.getElementById(id);if(el)el.oninput=()=>{S[id]=Number(el.value);render();};});
- document.querySelectorAll("[data-plan]").forEach(cb=>cb.onchange=()=>{S.selected[cb.dataset.plan]=cb.checked;render();});
- document.querySelectorAll("[data-rate]").forEach(inp=>inp.oninput=()=>{const[c,f]=inp.dataset.rate.split("|");S.rates[c][f]=Number(inp.value);render();});
- document.getElementById("export-pdf").onclick=exportPdf;
-}
-render();
+(function(){
+  var zh = true;
+  function num(id){ return Number(document.getElementById(id).value || 0); }
+  function val(id){ return document.getElementById(id).value || ""; }
+  function money(v, d){ d = d == null ? 2 : d; return Number(v||0).toLocaleString("en-HK",{minimumFractionDigits:d,maximumFractionDigits:d}); }
+  function plans(){
+    return [
+      {name: zh ? "SME plan" : "SME Plan", on: document.getElementById("selSME").checked, or: num("orSME"), loc: num("locSME")},
+      {name: zh ? "Dine-in plan" : "Dine-in Plan", on: document.getElementById("selDine").checked, or: num("orDine"), loc: num("locDine")},
+      {name: zh ? "Fast Food plan" : "Fast Food Plan", on: document.getElementById("selFast").checked, or: num("orFast"), loc: num("locFast")}
+    ];
+  }
+  function calc(){
+    var local = Math.max(0, Math.min(100, num("localRatio")));
+    var over = Math.max(0, 100 - local);
+    var gmv = num("gmv");
+    var ovRate = num("overseaRate");
+    document.getElementById("overRatio").value = over.toFixed(2) + "%";
+    var out = [];
+    plans().forEach(function(p){
+      if(!p.on) return;
+      var ls = local/100, os = over/100;
+      var daily = gmv * (p.or/100);
+      var cDaily = gmv*ls*(p.loc/100) + gmv*os*(ovRate/100);
+      var blended = p.loc*ls + ovRate*os;
+      out.push({name:p.name, or:p.or, loc:p.loc, ov:ovRate, local:local, over:over, blended:blended, gap:blended-p.or, daily:daily, annual:daily*365, cDaily:cDaily, cAnnual:cDaily*365, save:(cDaily-daily)*365});
+    });
+    return out;
+  }
+  function t(a,b){ return zh ? a : b; }
+  function render(){
+    document.getElementById("langBtn").textContent = zh ? "ENG" : "ZH";
+    document.getElementById("title").textContent = t("OpenRice Pay quotation","Payment Solution Quotation");
+    document.getElementById("heroTitle").textContent = t("Rate comparison","Payment rate comparison");
+    document.getElementById("heroDesc").textContent = t("Compare OpenRice rate vs current provider blended rate.","Compare OpenRice proposed rate with current provider blended rate.");
+    document.getElementById("inTitle").textContent = t("Merchant and rates","Merchant details and rates");
+    document.getElementById("outTitle").textContent = (val("merchant") || t("Customer","Merchant")) + t(" cost saving"," cost saving");
+    document.getElementById("pdfBtn").textContent = t("Export PDF","Export PDF");
+    document.getElementById("formula").textContent = t("Blended = local rate x local mix + overseas rate x overseas mix","Blended = local rate x local mix + overseas rate x overseas mix");
+    document.getElementById("note").textContent = t("Estimate only. Final rates follow the signed agreement.","Estimate only. Final rates follow the signed agreement.");
+    document.getElementById("saveLabel").textContent = t("Annual saving","Estimated annual saving");
+    var date = new Intl.DateTimeFormat("en-GB", {year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+    document.getElementById("metaDate").textContent = "DATE " + date;
+    document.getElementById("metaSales").textContent = "Sales " + (val("salesName") || "-");
+    var rows = calc();
+    var best = 0;
+    if(rows[0]) best = rows.reduce(function(a,b){ return b.save>a?b.save:a; }, rows[0].save);
+    document.getElementById("saveAmt").textContent = "$" + money(best, 0);
+    document.getElementById("saveBox").className = "box" + (best >= 0 ? "" : " bad");
+    if(rows[0]){
+      document.getElementById("path").textContent = rows[0].or.toFixed(2) + "% -> " + rows[0].blended.toFixed(2) + "% -> $" + money(best,0);
+      document.getElementById("summary").innerHTML = "<div style='display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #d9dee8'>" +
+        "<div style='padding:12px'><div style='font-size:11px;color:#647083'>OpenRice</div><b>" + rows[0].or.toFixed(2) + "%</b></div>" +
+        "<div style='padding:12px'><div style='font-size:11px;color:#647083'>Current</div><b>" + rows[0].blended.toFixed(2) + "%</b></div>" +
+        "<div style='padding:12px'><div style='font-size:11px;color:#647083'>Gap</div><b>" + Math.abs(rows[0].gap).toFixed(2) + " pts</b></div>" +
+        "<div style='padding:12px;background:#e5f2eb'><div style='font-size:11px;color:#2c7a55'>Saving</div><b class='save'>$" + money(rows[0].save,0) + "</b></div></div>";
+    } else {
+      document.getElementById("path").textContent = "";
+      document.getElementById("summary").innerHTML = "";
+    }
+    var html = "";
+    rows.forEach(function(r, i){
+      html += "<div class='card'><h3>0" + (i+1) + " " + r.name + " | GMV $" + money(num("gmv"),0) + "</h3>" +
+        "<table><thead><tr><th></th><th>OpenRice</th><th>Current</th></tr></thead><tbody>" +
+        "<tr><td>Rate</td><td class='or'>" + r.or.toFixed(2) + "%</td><td>" + r.blended.toFixed(2) + "%<br><small>Local " + r.loc.toFixed(2) + "% x " + r.local.toFixed(2) + "% / OS " + r.ov.toFixed(2) + "% x " + r.over.toFixed(2) + "%</small></td></tr>" +
+        "<tr><td>Daily</td><td class='or'>$" + money(r.daily) + "</td><td>$" + money(r.cDaily) + "</td></tr>" +
+        "<tr><td>Annual</td><td class='or'>$" + money(r.annual) + "</td><td>$" + money(r.cAnnual) + "</td></tr>" +
+        "<tr><td>Saving</td><td class='or'><span class='save'>$" + money(r.save) + "</span></td><td></td></tr>" +
+        "</tbody></table></div>";
+    });
+    document.getElementById("cards").innerHTML = html || "<p>Select at least one plan</p>";
+  }
+  document.getElementById("langBtn").onclick = function(){ zh = !zh; render(); };
+  ["gmv","localRatio","overseaRate","orSME","locSME","orDine","locDine","orFast","locFast"].forEach(function(id){ document.getElementById(id).oninput = render; });
+  ["selSME","selDine","selFast"].forEach(function(id){ document.getElementById(id).onchange = render; });
+  ["merchant","salesName","salesContact"].forEach(function(id){ document.getElementById(id).oninput = render; });
+  document.getElementById("pdfBtn").onclick = function(){
+    var node = document.getElementById("sheet");
+    if (typeof html2pdf !== "function") { window.print(); return; }
+    html2pdf().set({margin:[0.35,0.35],filename:"OpenRice_Quotation_" + (val("merchant") || "Merchant") + ".pdf",html2canvas:{scale:2},jsPDF:{unit:"in",format:"a4",orientation:"portrait"}}).from(node).save();
+  };
+  render();
+})();
 </script>
 </body>
 </html>
