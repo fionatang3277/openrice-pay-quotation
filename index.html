@@ -23,9 +23,10 @@ h1{margin:0;font-size:28px;color:#141a43}.meta{color:var(--muted);font-size:12px
 label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted)}input{padding:8px;border:1px solid var(--line)}
 table{width:100%;border-collapse:collapse;margin-top:14px}th{background:var(--ink);color:#fff;text-align:left;padding:8px}td{padding:8px;border-bottom:1px solid var(--line)}
 .btn{border:0;background:var(--accent);color:#fff;padding:10px 14px;font-weight:700}
-.card{border:1px solid var(--line);margin-top:12px}.card h3{margin:0;padding:10px 12px;background:#f7f8fb;font-size:14px}
+.card{border:1px solid var(--line);margin-top:12px;break-inside:avoid;page-break-inside:avoid}.card h3{margin:0;padding:10px 12px;background:#f7f8fb;font-size:14px}
 .or{background:#fdf6f4}.save{color:var(--success);font-size:22px}.note{padding:16px 32px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
 @media(max-width:800px){.hero,.grid,.g2{grid-template-columns:1fr}.head{flex-direction:column}}
+@media print{.bar,#pdfBtn{display:none!important}.sheet{box-shadow:none!important}}
 </style>
 </head>
 <body>
@@ -54,7 +55,7 @@ table{width:100%;border-collapse:collapse;margin-top:14px}th{background:var(--in
       </div>
       <div class="box" id="saveBox"><span id="saveLabel">Annual saving</span><b id="saveAmt">$0</b><small>HKD / 365 days</small></div>
     </div>
-    <div class="pad">
+    <div class="pad" id="inputPad">
       <h3 id="inTitle">Merchant and rates</h3>
       <div class="grid">
         <label>Merchant<input id="merchant"/></label>
@@ -168,9 +169,28 @@ table{width:100%;border-collapse:collapse;margin-top:14px}th{background:var(--in
   ["selSME","selDine","selFast"].forEach(function(id){ document.getElementById(id).onchange = render; });
   ["merchant","salesName","salesContact"].forEach(function(id){ document.getElementById(id).oninput = render; });
   document.getElementById("pdfBtn").onclick = function(){
-    var node = document.getElementById("sheet");
-    if (typeof html2pdf !== "function") { window.print(); return; }
-    html2pdf().set({margin:[0.35,0.35],filename:"OpenRice_Quotation_" + (val("merchant") || "Merchant") + ".pdf",html2canvas:{scale:2},jsPDF:{unit:"in",format:"a4",orientation:"portrait"}}).from(node).save();
+    var src = document.getElementById("sheet");
+    if (!src || typeof html2pdf !== "function") { window.print(); return; }
+    var clone = src.cloneNode(true);
+    var inputPad = clone.querySelector("#inputPad");
+    if (inputPad) inputPad.parentNode.removeChild(inputPad);
+    var btn = clone.querySelector("#pdfBtn");
+    if (btn) btn.parentNode.removeChild(btn);
+    clone.style.width = "680px";
+    clone.style.maxWidth = "680px";
+    clone.style.boxShadow = "none";
+    var hold = document.createElement("div");
+    hold.style.cssText = "position:fixed;left:-12000px;top:0;background:#fff;";
+    hold.appendChild(clone);
+    document.body.appendChild(hold);
+    html2pdf().set({
+      margin: [8, 8, 10, 8],
+      filename: "OpenRice_Quotation_" + (val("merchant") || "Merchant") + ".pdf",
+      image: {type:"jpeg", quality: 0.98},
+      html2canvas: {scale: 2, useCORS: true, backgroundColor: "#ffffff", windowWidth: 680},
+      jsPDF: {unit:"mm", format:"a4", orientation:"portrait"},
+      pagebreak: {mode: ["css", "legacy"], avoid: [".card", ".hero", ".head"]}
+    }).from(clone).save().then(function(){ if (hold.parentNode) hold.parentNode.removeChild(hold); }).catch(function(){ if (hold.parentNode) hold.parentNode.removeChild(hold); });
   };
   render();
 })();
