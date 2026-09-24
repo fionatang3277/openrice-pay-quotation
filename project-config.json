@@ -1,0 +1,34 @@
+{
+  "build_command": "pnpm run build",
+  "capabilities": [],
+  "dev_command": "pnpm run dev",
+  "env_vars": {},
+  "experiments": null,
+  "git_remote": {
+    "repo_url": "https://7f0548f6b28a1758d9bf7be630d36cb4.artifacts.cloudflare.net/git/prod/vc5vze4pgxrwuahm5akatw.git",
+    "expiration": "2026-09-16T09:56:56.471Z",
+    "token": "art_v2_x_43bfb81ed4007291f0703ac9c0e3d0d745b8935a?expires=1789552616",
+    "backend": "GIT_BACKEND_ARTIFACTS"
+  },
+  "name": "quotation-style-variants",
+  "path": "/home/ubuntu/quotation-style-variants",
+  "port": 3000,
+  "secrets": {
+    "BUILT_IN_FORGE_API_KEY": "buNC5fAyvGpDtiR7dgemCT",
+    "BUILT_IN_FORGE_API_URL": "https://forge.manus.ai",
+    "JWT_SECRET": "NZwTwjXhSX5AxuzErRbFaX",
+    "OAUTH_SERVER_URL": "https://api.manus.im",
+    "OWNER_NAME": "Fiona Tang",
+    "OWNER_OPEN_ID": "ckzAczk7ME8qQFyPa7yMM3",
+    "VITE_ANALYTICS_ENDPOINT": "https://manus-analytics.com",
+    "VITE_ANALYTICS_WEBSITE_ID": "a3181931-d718-4c94-a067-9a036a8ad269",
+    "VITE_APP_ID": "VC5VZe4pgXRWUaHM5AKAtw",
+    "VITE_APP_LOGO": "https://files.manuscdn.com/user_upload_by_module/web_dev_logo/310519663286297980/nZjCnGalCWHctFqZ.png",
+    "VITE_APP_TITLE": "Quotation Style Variants",
+    "VITE_FRONTEND_FORGE_API_KEY": "Lqdn42Uugdxq5gdDmhsATN",
+    "VITE_FRONTEND_FORGE_API_URL": "https://forge.manus.ai",
+    "VITE_OAUTH_PORTAL_URL": "https://manus.im"
+  },
+  "template_id": "web-static",
+  "test_command": "pnpm test"
+}
